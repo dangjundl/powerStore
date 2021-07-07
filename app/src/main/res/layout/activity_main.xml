@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/store_bg"
+    android:orientation="vertical"
+    tools:context=".activity.MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/calender_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            tools:text="날짜 정보"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_toLeftOf="@+id/lines1"/>
+
+        <Button
+            android:id="@+id/lines1"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/relativelayout_contain"
+            android:visibility="invisible"/>
+
+
+
+        <RelativeLayout
+            android:id="@+id/relativelayout_contain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/lines2">
+
+            <ImageView
+                android:id="@+id/user_name_background"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/login_bg"/>
+
+            <TextView
+                android:layout_marginTop="3dp"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="user_name"
+                android:textSize="20sp"/>
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/lines2"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:visibility="invisible" />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/home_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/activity_app_item" />
+
+</LinearLayout>
