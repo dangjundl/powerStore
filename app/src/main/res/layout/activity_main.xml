@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/store_bg"
     android:orientation="vertical"
+    android:contentDescription="hf_no_number"
     tools:context=".activity.MainActivity">
 
     <!-- id 수정 -->
@@ -109,15 +110,15 @@
 
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/solt_btn"
-        android:layout_alignParentEnd="true"
+
+    <TextView
+        android:id="@+id/text_text"
         android:layout_below="@+id/top_nav"
-        android:background="@color/white"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_width="20dp"
-        android:layout_height="20dp"/>
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="정렬"
+        android:textSize="1px"/>
 
 
 <!-- 버튼을 이용해서 하나의 라인으로 바꿧을때 가운데 정렬 -->
@@ -147,12 +148,18 @@
 
 <!--    </LinearLayout>-->
 
+    <Button
+        android:id="@+id/test_test_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_below="@+id/top_nav"
         android:id="@+id/home_recyclerView"
         android:clipToPadding="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="23dp"
         tools:listitem="@layout/activity_app_item" />
 
     <include
@@ -162,4 +169,12 @@
         android:layout_height="match_parent"
         android:visibility="gone" />
 
+    <include
+        android:id="@+id/test"
+        layout="@layout/activity_app_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
 </RelativeLayout>
+

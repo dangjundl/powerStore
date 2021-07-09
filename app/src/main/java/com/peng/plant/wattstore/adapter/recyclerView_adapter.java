@@ -3,6 +3,7 @@ package com.peng.plant.wattstore.adapter;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +15,13 @@ import java.util.List;
 
 public class recyclerView_adapter extends RecyclerView.Adapter<recyclerView_adapter.MyViewHolder>{
 
+    private static final String TAG = "daengjun";
     private List<ResolveInfo> MyAppList;
     private PackageManager myPackageManager;
     private Context context;
     private OnItemClickListener mListener = null ;
+    private View view;
+    private int num;
 
     public void setOnItemClickListener(OnItemClickListener listener){
         this.mListener = listener;
@@ -42,18 +46,21 @@ public class recyclerView_adapter extends RecyclerView.Adapter<recyclerView_adap
     }
 
     // 생성자에서 데이터 리스트 객체를 전달받음
-    public recyclerView_adapter(List<ResolveInfo> MyAppList, Context context){
+    public recyclerView_adapter(List<ResolveInfo> MyAppList, Context context,int layout_num){
         this.MyAppList = MyAppList;
         this.context = context;
+        this.num=layout_num;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewTypem) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_app_item, parent, false);
+        itemSelection(parent,viewTypem);
+
+
         //리사이클러뷰 아이템
 
-        return new MyViewHolder(v);
+        return new MyViewHolder(view);
     }
 
     // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시.
@@ -79,6 +86,27 @@ public class recyclerView_adapter extends RecyclerView.Adapter<recyclerView_adap
     @Override
     public int getItemCount() {
         return MyAppList.size();
+    }
+
+
+    public View itemSelection(ViewGroup parent,int viewTypem){
+        Log.d(TAG, "itemSelection: num값?"+num);
+
+        if(num==0) {
+            Log.d(TAG, "itemSelection: 여기 타나요? 1번");
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_app_item, parent, false);
+        }
+        else if(num==1){
+            Log.d(TAG, "itemSelection: 여기 타나요? 2번");
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_app_item2, parent, false);
+        }
+        else{
+            Log.d(TAG, "itemSelection: 여기 타나요? 3번");
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_app_item3, parent, false);
+
+        }
+
+        return view;
     }
 
 }

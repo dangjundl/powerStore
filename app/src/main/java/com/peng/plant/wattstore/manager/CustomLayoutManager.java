@@ -300,4 +300,12 @@ public abstract class CustomLayoutManager extends RecyclerView.LayoutManager {
     public int getOffsetCenterView() {
         return (int) ((getCurrentPosition() * (mShouldReverseLayout ? interval : -interval) - offset) * getDistanceRatio());
     }
+
+    /**
+     * item width
+     */
+    public int getEachItemWidth() {
+        return mDecoratedChildWidth;
+    }
+
 }
