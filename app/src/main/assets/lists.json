@@ -1,0 +1,124 @@
+
+{ "lists" : [
+  {
+    "appnamekor":"파워톡",
+    "appnameeng":"PowerTalk",
+    "apppkgname":"com.peng.plant.facetalk",
+    "appversion":"1.5.3",
+    "appdetailjson":"{\"googCpuOveruseDetection\":\"true\",\"serverUrl01\":\"https://watt.powertalk.kr:8353@1\",\"serverUrl02\":\"tcp://106.10.33.94:8354\",\"serverUrl03\":\"coturn1\",\"resolution\":\"1280 x 720\"}",
+    "useonglass":1,
+    "useonpc":1,
+    "sortnum":0
+  },
+  {
+    "appnamekor":"파워콜",
+    "appnameeng":"PowerCall",
+    "apppkgname":"com.peng.powercall",
+    "appversion":"1.2.16",
+    "appdetailjson":"{\"\"}",
+    "useonglass":1,
+    "useonpc":1,
+    "sortnum":1
+  },
+  {"appnamekor":"파워메모",
+    "appnameeng":"PowerMemo",
+    "apppkgname":"com.peng.power.memo",
+    "appversion":"1.0.27",
+    "appdetailjson":"{\"socket_url\":\"http://wattcloud.powertalk.kr:8351\",\"sftp_host\":\"106.10.33.94\",\"sftp_user\":\"sftpuser01\",\"sftp_user_pw\":\"Powereng#2501\",\"sftp_port\":\"22\",\"sftp_root_folder\":\"watt\",\"sftp_url\":\"https://wattcloud.powertalk.kr/sftp/watt/\"}",
+    "useonglass":1,
+    "useonpc":1,
+    "sortnum":2
+  },
+  {
+    "appnamekor":"설정",
+    "appnameeng":"Settings",
+    "apppkgname":"com.android.settings",
+    "appversion":"10",
+    "appdetailjson":"{\"\"}",
+    "useonglass":1,
+    "useonpc":1,
+    "sortnum":3
+  }
+  ,
+  {
+    "appnamekor":"테스트앱",
+    "appnameeng":"testApp",
+    "apppkgname":"com.android.settings",
+    "appversion":"10",
+    "appdetailjson":"{\"\"}",
+    "useonglass":1,
+    "useonpc":1,
+    "sortnum":3
+
+  }
+
+,
+  {
+    "appnamekor":"테스트앱",
+    "appnameeng":"testApp",
+    "apppkgname":"com.android.settings",
+    "appversion":"10",
+    "appdetailjson":"{\"\"}",
+    "useonglass":1,
+    "useonpc":1,
+    "sortnum":3
+  }
+
+,
+  {
+    "appnamekor":"테스트앱",
+    "appnameeng":"testApp",
+    "apppkgname":"com.android.settings",
+    "appversion":"10",
+    "appdetailjson":"{\"\"}",
+    "useonglass":1,
+    "useonpc":1,
+    "sortnum":3
+  }
+,
+  {
+    "appnamekor":"테스트앱",
+    "appnameeng":"testApp",
+    "apppkgname":"com.android.settings",
+    "appversion":"10",
+    "appdetailjson":"{\"\"}",
+    "useonglass":1,
+    "useonpc":1,
+    "sortnum":3
+  },
+
+  {
+    "appnamekor":"테스트앱",
+    "appnameeng":"testApp",
+    "apppkgname":"com.android.settings",
+    "appversion":"10",
+    "appdetailjson":"{\"\"}",
+    "useonglass":1,
+    "useonpc":1,
+    "sortnum":3
+  },
+
+  {
+    "appnamekor":"테스트앱",
+    "appnameeng":"testApp",
+    "apppkgname":"com.android.settings",
+    "appversion":"10",
+    "appdetailjson":"{\"\"}",
+    "useonglass":1,
+    "useonpc":1,
+    "sortnum":3
+  },
+
+  {
+    "appnamekor":"테스트앱",
+    "appnameeng":"testApp",
+    "apppkgname":"com.android.settings",
+    "appversion":"10",
+    "appdetailjson":"{\"\"}",
+    "useonglass":1,
+    "useonpc":1,
+    "sortnum":3
+  }
+
+]
+}

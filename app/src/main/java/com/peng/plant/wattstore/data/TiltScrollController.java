@@ -32,6 +32,7 @@ public class TiltScrollController implements SensorEventListener {
     private int mLastAccuracy;
     private float mOldZ;
     private float mOldX;
+    private int appCount;
 
     /**
      * Constructor.
@@ -68,6 +69,12 @@ public class TiltScrollController implements SensorEventListener {
         }
     }
 
+    public void setAppCount(int count)
+    {
+        appCount = count;
+    }
+
+
     /**
      * Update the rotation based on changes to the device's sensors.
      *
@@ -101,6 +108,8 @@ public class TiltScrollController implements SensorEventListener {
                 worldAxisForDeviceAxisY = SensorManager.AXIS_X;
                 break;
         }
+
+
 
         remapCoordinateSystem(
                 mRotationMatrix,

@@ -123,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="저장"
+                android:text="적용"
                 android:textColor="@color/white" />
 
             <Button
