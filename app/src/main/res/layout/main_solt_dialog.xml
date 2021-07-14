@@ -38,32 +38,31 @@
                     android:orientation="vertical"
                     android:weightSum="3">
 
-                    <ImageView
-                        android:id="@+id/image_example1"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:padding="8dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/first" />
+                    <!--                    <ImageView-->
+                    <!--                        android:id="@+id/image_example1"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="0dp"-->
+                    <!--                        android:layout_weight="1"-->
+                    <!--                        android:padding="8dp"-->
+                    <!--                        android:scaleType="fitXY"-->
+                    <!--                        android:src="@drawable/first" />-->
 
                     <ImageView
                         android:id="@+id/image_example2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:padding="8dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/first" />
+                        android:src="@drawable/android_logo" />
 
-                    <ImageView
-                        android:id="@+id/image_example3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:padding="8dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/first" />
+                    <!--                    <ImageView-->
+                    <!--                        android:id="@+id/image_example3"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="0dp"-->
+                    <!--                        android:layout_weight="1"-->
+                    <!--                        android:padding="8dp"-->
+                    <!--                        android:scaleType="fitXY"-->
+                    <!--                        android:src="@drawable/first" />-->
                 </LinearLayout>
 
 

@@ -98,9 +98,17 @@ public class recyclerView_adapter extends RecyclerView.Adapter<recyclerView_adap
 //        Glide.with(context).load(imageStr).error(R.drawable.icon_powertalk).into(holder.ivPicture);
         paths = String.format("%sicon_%s.png" , DEFINE.SERVER_LOGO_DOWNLOAD_URL , appDatas.appNameEng.toLowerCase());
 
-        Log.d(TAG, "onBindViewHolder: path"+paths);
+       String test = imageStr;
 
-                Glide.with(context).load("https://watt.powertalk.kr:8357/powerstore/icons/icon_powermemo.png").into(holder.ivPicture);
+        Glide.with(context)
+                .load(paths)
+                .error(R.drawable.ic_launcher_foreground)
+                .into(holder.ivPicture);
+
+
+        Log.d(TAG, "onBindViewHolder: path"+test);
+
+//                Glide.with(context).load("http://watt.powertalk.kr:8357/powerstore/icons/icon_powermemo.png").into(holder.ivPicture);
 
 
 

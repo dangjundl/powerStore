@@ -118,7 +118,39 @@
     "useonglass":1,
     "useonpc":1,
     "sortnum":3
-  }
+  },
 
+  {
+    "appnamekor":"테스트앱",
+    "appnameeng":"testApp",
+    "apppkgname":"com.android.settings",
+    "appversion":"10",
+    "appdetailjson":"{\"\"}",
+    "useonglass":1,
+    "useonpc":1,
+    "sortnum":3
+  },
+
+  {
+    "appnamekor":"테스트앱",
+    "appnameeng":"testApp",
+    "apppkgname":"com.android.settings",
+    "appversion":"10",
+    "appdetailjson":"{\"\"}",
+    "useonglass":1,
+    "useonpc":1,
+    "sortnum":3
+  },
+
+  {
+    "appnamekor":"테스트앱",
+    "appnameeng":"testApp",
+    "apppkgname":"com.android.settings",
+    "appversion":"10",
+    "appdetailjson":"{\"\"}",
+    "useonglass":1,
+    "useonpc":1,
+    "sortnum":3
+  }
 ]
 }

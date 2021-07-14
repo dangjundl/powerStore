@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
 import android.app.AlertDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -56,15 +58,22 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 
+/* 1.1라인일때 화면고정이 되어서 틸트센서가 제대로 동작하지않음
+   2.gif캡쳐따서 1라인에도 gif이미지 적용
+   3.2라인,3라인 일때 어플 실행이 안됨
+   4.틸트센서에 onresume이라던가 onPause를 제대로 이해하지못해서 사용을 제대로 못했음
+   5.xml파일을 3개만들어서 각각 선택하는 형식인데 dimen?을 이용해서 화면사이즈에 대응해서 이미지크기라던지 텍스트 크기 변경시키는쪽으로 바꿔야함
+*/
+
+
 public class MainActivity extends AppCompatActivity implements TiltScrollController.ScrollListener {
     private static final String TAG = "Daengjun";
     private SimpleDateFormat mFormat = new SimpleDateFormat("yyyy/MM/dd"); // 날짜 포맷 형식
     private RecyclerView mRecyclerView;
     private GridLayoutManager mGridlayout_two, mGridlayout_three;
     private TextView calender, solt_input_txt, developer_mode_on, developer_mode_off;
-    private PackageManager myPackageManager;
-    private Button canclebutton, solt_dialog_apply_btn, solt_dialog_reset_btn,test_btn;
-    private Animation animShow, animHide ,fadeInAnim_in, fadeInAnim_out;
+    private Button canclebutton, solt_dialog_apply_btn, solt_dialog_reset_btn, test_btn;
+    private Animation animShow, animHide, fadeInAnim_in, fadeInAnim_out;
     private View line_solt;
     private GalleryLayoutManager galleryLayoutManager;
     private ScrollZoomLayoutManager scrollZoomLayoutManager;
@@ -76,8 +85,9 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
     private TiltScrollController mTiltScrollController;
     private int layout_num = 1;
     private static String POWERSTORE_OFFLINE_MODE = "powerstore_offline_mode";
-    String path;
+    private ImageView image_example2_anim;
     String json = "";
+
 
     @Override
     public void onTilt(int x, int y, float deltaX) {
@@ -124,29 +134,24 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
 //    }
 //
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        line_solt = findViewById(R.id.line_solt_dialog);
-        mRecyclerView = findViewById(R.id.home_recyclerView);
-        line_num_check = (RadioGroup) findViewById(R.id.line_radioGroup);
-        solt_dialog_apply_btn = (Button) findViewById(R.id.solt_dialog_apply);
-        solt_dialog_reset_btn = (Button) findViewById(R.id.solt_dialog_reset);
-        solt_input_txt = (TextView) findViewById(R.id.solt_global_txt);
-        test_btn = (Button) findViewById(R.id.test_test_test);
-        developer_mode_on = (TextView) findViewById(R.id.developer_mode);
-        developer_mode_off = (TextView) findViewById(R.id.developer_mode_off);
-        layout = (RelativeLayout) findViewById(R.id.relativelayout_main);
+        //findviewid 등록
+        findview_id();
 
-        //앱스 json 데이터
-//        apps = new offlineAppinfos().get2();
+        //json데이터 파싱
         getJsonString();
         jsonParsing(json);
+
+        //애니메이션 효과
         initAnimation();
+
+        //상단바투명하게 만들기
         top_transparent();
+
         // 화면을 landscape(가로) 화면으로 고정하고 싶은 경우
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
@@ -164,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
         calender.setText(time);
 
         //패키지 권한을 가져옴
-        myPackageManager = getPackageManager();
+//        myPackageManager = getPackageManager();
 
         //아이템의 크기가 변경되지않는다는것을 명시
         mRecyclerView.setHasFixedSize(true);
@@ -172,16 +177,16 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
         canclebutton = (Button) findViewById(R.id.solt_dialog_cancle);
 
 
-        Intent intent = new Intent(Intent.ACTION_MAIN, null);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        List<ResolveInfo> intentList = myPackageManager.queryIntentActivities(intent, 0);
+//        Intent intent = new Intent(Intent.ACTION_MAIN, null);
+//        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+//        List<ResolveInfo> intentList = myPackageManager.queryIntentActivities(intent, 0);
 
         configureRecyclerView();
         recyclerView_adapter myAdapter = new recyclerView_adapter(apps, this, layout_num);
         mRecyclerView.setAdapter(myAdapter);
-        mRecyclerView.scrollToPosition(2); // 요게 머지? 찾아보기
+//        mRecyclerView.scrollToPosition(2); // 스크롤 어디서부터 할지 포지션 숫자
 
-       //라인정렬 적용
+        //라인정렬 적용
         solt_dialog_apply_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -212,16 +217,22 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
                         layoutManager = galleryLayoutManager;
                         layout_num = 0;
                         toast = "1line으로 변경되었습니다";
+                        image_example2_anim.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        line_solt_image(0);
                         break;
                     case R.id.two_line_btn:
                         layoutManager = mGridlayout_two;
                         layout_num = 1;
                         toast = "2line으로 변경되었습니다";
+                        image_example2_anim.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        line_solt_image(1);
                         break;
                     case R.id.three_line_btn:
                         layoutManager = mGridlayout_three;
                         layout_num = 2;
                         toast = "3line으로 변경되었습니다";
+                        image_example2_anim.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        line_solt_image(2);
                         break;
 
                 }
@@ -229,11 +240,13 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
             }
         });
 
-    //정렬버튼 닫기
+        //정렬버튼 닫기
         canclebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 solt_line_close();
+                image_example2_anim.setScaleType(ImageView.ScaleType.FIT_XY);
+                line_solt_image(-1);
 
             }
         });
@@ -246,8 +259,10 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
 
                 layout_num = 0;
                 toast = "초기값으로 변경되었습니다";
-                line_reset(layout_num,toast);
-                Log.d(TAG, "onClick: apps"+apps);
+                line_reset(layout_num, toast);
+                Log.d(TAG, "onClick: apps" + apps);
+                image_example2_anim.setScaleType(ImageView.ScaleType.FIT_XY);
+                line_solt_image(-1);
 
 
             }
@@ -258,25 +273,43 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
         developer_mode_on.setOnClickListener(MainonClickListener);
         developer_mode_off.setOnClickListener(MainonClickListener);
         solt_input_txt.setOnClickListener(MainonClickListener);
-        
+
         //설치된 어플 눌렀을때 동작
         myAdapter.setOnItemClickListener(new recyclerView_adapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
 
-                ResolveInfo cleckedResolveInfo =
-                        intentList.get(pos);
-                ActivityInfo clickedActivityInfo =
-                        cleckedResolveInfo.activityInfo;
+                AppData cleckedResolveInfo =
+                        apps.get(pos);
+                openApp(getApplicationContext(), cleckedResolveInfo.appPackageName);
 
-                Intent intent = new Intent(Intent.ACTION_MAIN);
-                intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                intent.setClassName(
-                        clickedActivityInfo.applicationInfo.packageName,
-                        clickedActivityInfo.name);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                startActivity(intent);
+//                AppData cleckedResolveInfo =
+//                        apps.get(pos);
+//                ActivityInfo clickedActivityInfo =
+//                        cleckedResolveInfo.;
+//
+//                Intent intent = new Intent(Intent.ACTION_MAIN);
+//                intent.addCategory(Intent.CATEGORY_LAUNCHER);
+//                intent.setClassName(
+//                        clickedActivityInfo.applicationInfo.packageName,
+//                        clickedActivityInfo.name);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+//                        Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+//                startActivity(intent);
+//
+//
+//                ComponentName compName = new ComponentName("com.home.myapp","com.home.myapp.CMyapp");
+//
+//                Intent intent = new Intent(Intent.ACTION_MAIN);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//
+////Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP
+////이방식으로 플러그를 설정해주면 다른앱 실행시 처음 루트 ACTIVITY 빼곤 모두 사라집니다.
+//
+//                intent.setComponent(compName);
+//                intent.putExtra("psj_test", "this is test"); //값전달
+//                startActivity(intent);
+
 
             }
         });
@@ -291,7 +324,6 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
                 case R.id.solt_global_txt:
                     //라디오 초기화
                     line_num_check.clearCheck();
-
                     line_solt.setVisibility(View.VISIBLE);
                     line_solt.startAnimation(animShow);
                     break;
@@ -363,10 +395,9 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
     }
 
 
-
     boolean isDeveloperMode = false;
 
-    //개발자 모드
+    //개발자 모드 , 배경 바뀌는정도만 구현
     private void changeDeveloperMode(boolean isDeveloper) {
         if (isDeveloper) {
             layout.setBackgroundColor(0xff000000);
@@ -378,7 +409,7 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
     }
 
 
-    private void solt_line_close(){
+    private void solt_line_close() {
 
         line_solt.startAnimation(animHide);
         line_solt.setVisibility(View.GONE);
@@ -387,7 +418,7 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
     }
 
 
-    private void line_reset(int num , String toast_msg){
+    private void line_reset(int num, String toast_msg) {
         scrollZoomLayoutManager = new ScrollZoomLayoutManager(this, Dp2px(10));
 
         layout_num = num;
@@ -404,16 +435,33 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
     }
 
 
+    private void findview_id() {
 
+        line_solt = findViewById(R.id.line_solt_dialog);
+        mRecyclerView = findViewById(R.id.home_recyclerView);
+        line_num_check = (RadioGroup) findViewById(R.id.line_radioGroup);
+        solt_dialog_apply_btn = (Button) findViewById(R.id.solt_dialog_apply);
+        solt_dialog_reset_btn = (Button) findViewById(R.id.solt_dialog_reset);
+        solt_input_txt = (TextView) findViewById(R.id.solt_global_txt);
+        test_btn = (Button) findViewById(R.id.test_test_test);
+        developer_mode_on = (TextView) findViewById(R.id.developer_mode);
+        developer_mode_off = (TextView) findViewById(R.id.developer_mode_off);
+        layout = (RelativeLayout) findViewById(R.id.relativelayout_main);
+        image_example2_anim = (ImageView) findViewById(R.id.image_example2);
+    }
+
+    //정렬 다이어로그
     void showDialog() {
         AlertDialog.Builder msgBuilder = new AlertDialog.Builder(MainActivity.this)
-                .setTitle("라인변경을 하시겠습니까?") .setMessage(layout_num+1+" Line 적용")
-                .setPositiveButton("취소", new DialogInterface.OnClickListener()
-                {@Override public void onClick(DialogInterface dialogInterface, int i) {
+                .setTitle("라인변경을 하시겠습니까?").setMessage(layout_num + 1 + " Line 적용")
+                .setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
-                }
-                }) .setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                }).setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
                         padding_control(layout_num);
                         mRecyclerView.setLayoutManager(layoutManager);
                         recyclerView_adapter myAdapter = new recyclerView_adapter(apps, getApplicationContext(), layout_num);
@@ -423,12 +471,12 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
 
                     }
                 });
-        AlertDialog msgDlg = msgBuilder.create(); msgDlg.show();
+        AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.show();
     }
 
     //json 파일 읽어오기
-    private String getJsonString()
-    {
+    private String getJsonString() {
 
 
         try {
@@ -440,9 +488,7 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
             is.close();
 
             json = new String(buffer, "UTF-8");
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
 
@@ -450,31 +496,81 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
     }
 
 
-    private void jsonParsing(String json)
-    {
-        try{
+    private void jsonParsing(String json) {
+        getJsonString();
+
+        try {
             JSONObject jsonObject = new JSONObject(json);
             JSONArray movieArray = jsonObject.getJSONArray("lists");
 
-            for (int app_pos = 0 ; app_pos<movieArray.length() ; app_pos++)
-            {
+            for (int app_pos = 0; app_pos < movieArray.length(); app_pos++) {
                 JSONObject movieObject = movieArray.getJSONObject(app_pos);
                 AppData data = new AppData();
                 data.position = app_pos;
                 data.appNameKor = movieObject.getString("appnamekor");
                 data.appNameEng = movieObject.getString("appnameeng");
                 data.appPackageName = movieObject.getString("apppkgname");
-                data.appUpdateVersion =  movieObject.getString("appversion");
+                data.appUpdateVersion = movieObject.getString("appversion");
 
-                apps.put(app_pos , data);
+                apps.put(app_pos, data);
             }
 
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
 
+    //패키지명으로 어플실행
+    public static boolean openApp(Context context, String packageName) {
+        PackageManager manager = context.getPackageManager();
+        try {
+            Intent i = manager.getLaunchIntentForPackage(packageName);
+            if (i == null) {
+                throw new PackageManager.NameNotFoundException();
+            }
+            i.addCategory(Intent.CATEGORY_LAUNCHER);
+            context.startActivity(i);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private void line_solt_image(int img_num) {
+
+        switch (img_num) {
+            case -1:
+                Glide.with(getApplicationContext())
+                        .load(R.drawable.android_logo)
+                        .error(R.drawable.ic_launcher_foreground)
+                        .into(image_example2_anim);
+                break;
+            case 0:
+                Glide.with(getApplicationContext())
+                        .load(R.drawable.first)
+                        .error(R.drawable.ic_launcher_foreground)
+                        .into(image_example2_anim);
+                break;
+            case 1:
+                Glide.with(getApplicationContext())
+                        .load(R.drawable.animation2)
+                        .error(R.drawable.ic_launcher_foreground)
+                        .into(image_example2_anim);
+                break;
+            case 2:
+                Glide.with(getApplicationContext())
+                        .load(R.drawable.animation3)
+                        .error(R.drawable.ic_launcher_foreground)
+                        .into(image_example2_anim);
+                break;
+
+        }
+    }
 
 
 //    private String getVersionInfo(String packageName) {
@@ -619,9 +715,6 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
 //        eventHandler.sendMessageDelayed(msg, 100); // 시간 단축 필요
 //
 //    }
-
-
-
 
 
 }
